@@ -4,11 +4,14 @@ class MyCounter implements Runnable {
   // volatile has no influence on "read-modify-write" type
   // problems, so no change here...
   /*volatile*/ int counter = 0;
+  private Object rendezvous = new Object();
   @Override
   public void run() {
     System.out.println(Thread.currentThread().getName() + " Task starting");
     for (int i = 0; i < 100_000_000; i++) {
-      counter++;
+      synchronized(this.rendezvous) {
+        counter++;
+      }
     }
     System.out.println(Thread.currentThread().getName() + " Task ending");
   }
