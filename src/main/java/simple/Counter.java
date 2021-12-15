@@ -1,7 +1,9 @@
 package simple;
 
 class MyCounter implements Runnable {
-  int counter = 0;
+  // volatile has no influence on "read-modify-write" type
+  // problems, so no change here...
+  /*volatile*/ int counter = 0;
   @Override
   public void run() {
     System.out.println(Thread.currentThread().getName() + " Task starting");
@@ -11,6 +13,7 @@ class MyCounter implements Runnable {
     System.out.println(Thread.currentThread().getName() + " Task ending");
   }
 }
+
 public class Counter {
   public static void main(String[] args) throws Throwable {
     MyCounter mc = new MyCounter();
